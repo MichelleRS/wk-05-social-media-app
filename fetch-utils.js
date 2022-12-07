@@ -89,6 +89,12 @@ export async function decrementStars(id) {
     return checkError(response);
 }
 
+// add user message to Supabase 'messages' table
+export async function createMessage(message) {
+    const response = await client.from('messages').insert(message).single();
+    return checkError(response);
+}
+
 export async function getProfiles() {
     const response = await client.from('profiles').select('*');
     return checkError(response);
