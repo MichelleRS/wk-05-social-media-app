@@ -241,3 +241,34 @@ Need one more CRUD route - can update and not create if you want, let TA know
 ---
 
 Due? Friday morning
+
+---
+
+## Chat Room Planning
+
+-   create chat-room folder and files:
+    -   chat-room.js, index.html
+-   add chat room to nav
+-   chat-room/index.html:
+    -   message form
+    -   empty container for rendered messages
+-   fetch-utils:
+    -   createMessage(message)
+-   chat-room.js:
+    -   event listener for form submit
+-   render-utils:
+    -   renderMessages(profile)
+-   chat-room.js:
+    -   fetchAndDisplayMessages()
+-   fetch-utils:
+    -   onMessage(profileId, handleMessage)
+-   chat-room.js:
+    -   add to page load event listener:
+
+```
+    onMessage(id, async (payload) => {
+        console.log('payload', payload);
+        fetchAndDisplayMessages();
+    });
+
+```
