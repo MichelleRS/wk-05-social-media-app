@@ -61,7 +61,12 @@ export async function getProfile(user_id) {
 }
 
 export async function getProfileById(id) {
-    const response = await client.from('profiles').select('*').match({ id }).single();
+    const response = await client.from('profiles').select('*, messages(*)').match({ id }).single();
+    return checkError(response);
+}
+
+export async function getProfiles() {
+    const response = await client.from('profiles').select('*');
     return checkError(response);
 }
 
@@ -89,9 +94,12 @@ export async function decrementStars(id) {
     return checkError(response);
 }
 
-export async function getProfiles() {
-    const response = await client.from('profiles').select('*');
+export async function createMessage(message) {
+    const response = await client.from('messages').insert(message).single();
     return checkError(response);
+}
+export async function onMessage(profileId, handleMessage) {
+    client.from(`messages:recipient_id=eq.${profileId}`).on('INSERT', handleMessage).subscribe();
 }
 
 // error handling
