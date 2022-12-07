@@ -5,12 +5,14 @@ import {
     decrementStars,
     getProfileById,
     incrementStars,
+    createMessage,
 } from '../fetch-utils.js';
 
 // get DOM elements
 const imgEl = document.querySelector('#avatar-img');
 const usernameHeaderEl = document.querySelector('.username-header');
 const profileDetailEl = document.querySelector('.profile-detail');
+const messageForm = document.querySelector('.message-form');
 
 const params = new URLSearchParams(location.search);
 const id = params.get('id');
@@ -26,6 +28,25 @@ window.addEventListener('load', async () => {
         return;
     }
     fetchAndDisplayProfile();
+});
+
+messageForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(messageForm);
+    const user = getUser();
+    const senderProfile = await getProfile(user.id);
+    if (!senderProfile) {
+        alert('You must create a profile to be able to message any user');
+        location.assign('/');
+    } else {
+        await createMessage({
+            text: data.get('message'),
+            sender: senderProfile.data.username,
+            recipient_id: id,
+            user_id: user.id,
+        });
+        messageForm.reset();
+    }
 });
 
 // get profile
