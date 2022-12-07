@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- metadata -->
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+        <!-- title and favicon -->
+        <title>Supabase Web App</title>
+        <link rel="icon" type="image/x-icon" href="/assets/alchemy-favicon.png" />
+
+        <!-- js -->
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"
+        ></script>
+        <script type="module" src="chat-room.js"></script>
+
+        <!-- fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600&family=Titillium+Web:wght@200;400;600&display=swap"
+        />
+
+        <!-- css -->
+        <link rel="stylesheet" href="../styles/reset.css" />
+        <link rel="stylesheet" href="../styles/global.css" />
+        <!-- add link for page specific css -->
+    </head>
+
+    <body>
+        <header class="page-header">
+            <img class="logo" src="/assets/html_css_js.png" alt="logo" />
+            <p class="title">Supabase Web App</p>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/profile-editor/index.html">Edit Profile</a>
+                <a id="sign-out-link" href="../auth/index.html">Sign Out</a>
+            </nav>
+        </header>
+
+        <main>
+            <h1>Welcome to the Chat Room!</h1>
+
+            <!-- message form -->
+            <form class="message-form">
+                <!-- user message -->
+                <label for="message">Type your message:</label>
+                <textarea
+                    name="message"
+                    id="message"
+                    rows="8"
+                    cols="45"
+                    placeholder="Your message here..."
+                    required
+                ></textarea>
+
+                <!-- submit button -->
+                <button type="submit">Submit Message</button>
+            </form>
+
+            <!-- container for messages -->
+            <section class="messages-container"></section>
+        </main>
+    </body>
+</html>
