@@ -1,8 +1,10 @@
 // imports
-import { createMessage, getProfile, getUser } from '../fetch-utils.js';
+import { createMessage, getProfile, getProfileById, getUser } from '../fetch-utils.js';
+import { renderMessages } from '../render-utils.js';
 
 // get DOM elements
 const messageForm = document.querySelector('.message-form');
+const messagesContainer = document.querySelector('.messages-container');
 
 const params = new URLSearchParams(location.search);
 const id = params.get('id');
@@ -42,3 +44,18 @@ messageForm.addEventListener('submit', async (e) => {
 });
 
 // display functions
+
+// fetch and display user messages
+async function fetchAndDisplayMessages() {
+    // clear messages container
+    messagesContainer.textContent = '';
+
+    // get profile by id
+    const profile = await getProfileById(id);
+
+    // set the profile object to a variable
+    const messagesList = renderMessages(profile);
+
+    // append the profile object variable to the messages container
+    messagesContainer.append(messagesList);
+}
