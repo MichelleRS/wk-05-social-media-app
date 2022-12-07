@@ -32,6 +32,10 @@ export function renderMessages(profile) {
         const textEl = document.createElement('p');
         textEl.textContent = profile.messages[i].text;
 
+        // create a p element to display user ('sender')
+        const senderEl = document.createElement('p');
+        senderEl.textContent = `Posted by ${profile.messages[i].sender}.`;
+
         // create a p element to display date info ('created_at')
         const dateEl = document.createElement('p');
         dateEl.textContent = new Date(profile.messages[i].create_at).toLocaleString('en-US', {
@@ -43,7 +47,7 @@ export function renderMessages(profile) {
         });
 
         // append
-        liContainer.append(textEl, dateEl);
+        liContainer.append(textEl, senderEl, dateEl);
         ulContainer.append(liContainer);
 
         // return
