@@ -17,3 +17,36 @@ export function renderProfile(profileObject) {
     div.append(img, a, p);
     return div;
 }
+
+// render messages for chat room
+export function renderMessages(profile) {
+    // create list container for messages
+    const ulContainer = document.createElement('ul');
+
+    // for loop for each message
+    for (let i = 0; i < profile.messages.length; i++) {
+        // li container for each message
+        const liContainer = document.createElement('li');
+
+        // create a p element to display message ('text')
+        const textEl = document.createElement('p');
+        textEl.textContent = profile.messages[i].text;
+
+        // create a p element to display date info ('created_at')
+        const dateEl = document.createElement('p');
+        dateEl.textContent = new Date(profile.messages[i].create_at).toLocaleString('en-US', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+        });
+
+        // append
+        liContainer.append(textEl, dateEl);
+        ulContainer.append(liContainer);
+
+        // return
+        return ulContainer;
+    }
+}
