@@ -45,8 +45,8 @@ export function renderMessages(profile) {
         );
         const text = document.createElement('p');
         text.classList.add('text');
-        text.textContent = profile.message[i].text;
-        div.append(senderSpan.dateSpan);
+        text.textContent = profile.messages[i].text;
+        div.append(senderSpan, dateSpan);
         li.append(div, text);
         ul.append(li);
     }

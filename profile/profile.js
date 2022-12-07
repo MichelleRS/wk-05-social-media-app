@@ -6,7 +6,9 @@ import {
     getProfileById,
     incrementStars,
     createMessage,
+    onMessage,
 } from '../fetch-utils.js';
+import { renderMessages } from '../render-utils.js';
 
 // get DOM elements
 const imgEl = document.querySelector('#avatar-img');
@@ -28,6 +30,10 @@ window.addEventListener('load', async () => {
         return;
     }
     fetchAndDisplayProfile();
+    onMessage(id, async (payload) => {
+        console.log(`payload`, payload);
+        fetchAndDisplayProfile();
+    });
 });
 
 messageForm.addEventListener('submit', async (e) => {
@@ -61,8 +67,9 @@ async function fetchAndDisplayProfile() {
     profileDetailEl.textContent = profile.bio;
 
     const profileStars = renderStars(profile);
+    const messageList = renderMessages(profile);
 
-    profileDetailEl.append(profileStars);
+    profileDetailEl.append(profileStars, messageList);
 }
 
 // render stars
