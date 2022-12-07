@@ -65,6 +65,11 @@ export async function getProfileById(id) {
     return checkError(response);
 }
 
+export async function getProfiles() {
+    const response = await client.from('profiles').select('*');
+    return checkError(response);
+}
+
 export async function incrementStars(id) {
     const profile = await getProfileById(id);
 
@@ -95,9 +100,16 @@ export async function createMessage(message) {
     return checkError(response);
 }
 
-export async function getProfiles() {
-    const response = await client.from('profiles').select('*');
-    return checkError(response);
+// real time function
+// this is technically an event (happens on a button click), so it doesn't need to be async
+export function onMessage(profileId, handleMessage) {
+    client
+        // what table and what rows are we getting from?
+        .from(`messages:recipient_id=eq.${profileId}`)
+        // what type of changes are we interested in?
+        .on('INSERT', handleMessage)
+        // do it!
+        .subscribe();
 }
 
 // error handling
