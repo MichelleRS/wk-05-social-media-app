@@ -7,6 +7,7 @@ import {
     incrementStars,
     createMessage,
 } from '../fetch-utils.js';
+import { renderMessages } from '../render-utils.js';
 
 // get DOM elements
 const imgEl = document.querySelector('#avatar-img');
@@ -70,9 +71,14 @@ async function fetchAndDisplayProfile() {
     usernameHeaderEl.textContent = profile.username;
     profileDetailEl.textContent = profile.bio;
 
+    // render stars
     const profileStars = renderStars(profile);
 
-    profileDetailEl.append(profileStars);
+    // render messages
+    const messagesList = renderMessages(profile);
+
+    // append stars and messages to profile detail container
+    profileDetailEl.append(profileStars, messagesList);
 }
 
 // render stars
