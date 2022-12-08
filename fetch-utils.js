@@ -56,12 +56,16 @@ export async function uploadImage(imagePath, imageFile) {
 }
 
 export async function getProfile(user_id) {
-    const response = await client.from('profiles').select('*').match({ user_id }).maybeSingle();
+    const response = await client
+        .from('profiles')
+        .select('*, messages(*)')
+        .match({ user_id })
+        .maybeSingle();
     return response;
 }
 
 export async function getProfileById(id) {
-    const response = await client.from('profiles').select('*').match({ id }).single();
+    const response = await client.from('profiles').select('*, messages(*)').match({ id }).single();
     return checkError(response);
 }
 

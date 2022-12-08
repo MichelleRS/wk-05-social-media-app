@@ -1,15 +1,30 @@
 // imports
-import { createMessage, getProfile, getProfileById, getUser } from '../fetch-utils.js';
+import { createMessage, getProfile, getProfileById, getUser, onMessage } from '../fetch-utils.js';
 import { renderMessages } from '../render-utils.js';
 
 // get DOM elements
 const messageForm = document.querySelector('.message-form');
 const messagesContainer = document.querySelector('.messages-container');
 
-const params = new URLSearchParams(location.search);
-const id = params.get('id');
-
+const user = getUser();
 // events
+// add event listener for page load: messages appear
+window.addEventListener('load', async () => {
+    const profile = getProfile(user.id);
+
+    // error handling
+    // if (!id) {
+    //     location.assign('/');
+    //     return;
+    // }
+    // call fetchAndDisplayMessages()
+    fetchAndDisplayMessages();
+
+    // payload
+    onMessage(profile.id, async (payload) => {
+        fetchAndDisplayMessages();
+    });
+});
 
 // event listener for form submit button
 messageForm.addEventListener('submit', async (e) => {
@@ -35,7 +50,7 @@ messageForm.addEventListener('submit', async (e) => {
         await createMessage({
             text: data.get('message'),
             sender: senderProfile.data.username,
-            recipient_id: id,
+            recipient_id: senderProfile.data.id,
             user_id: user.id,
         });
         // reset form
@@ -50,8 +65,9 @@ async function fetchAndDisplayMessages() {
     // clear messages container
     messagesContainer.textContent = '';
 
-    // get profile by id
-    const profile = await getProfileById(id);
+    // get profile by user_id
+    const profile = await getProfile(user.id);
+    console.log('user', user);
 
     // set the profile object to a variable
     const messagesList = renderMessages(profile);
