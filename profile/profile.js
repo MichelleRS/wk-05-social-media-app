@@ -6,6 +6,7 @@ import {
     getProfileById,
     incrementStars,
     createMessage,
+    onMessage,
 } from '../fetch-utils.js';
 import { renderMessages } from '../render-utils.js';
 
@@ -17,9 +18,8 @@ const messageForm = document.querySelector('.message-form');
 
 const params = new URLSearchParams(location.search);
 const id = params.get('id');
-// events
 
-// display functions
+// events
 window.addEventListener('load', async () => {
     // error handling
     // no id found? redirect back to main page
@@ -29,6 +29,11 @@ window.addEventListener('load', async () => {
         return;
     }
     fetchAndDisplayProfile();
+
+    // call onMessage
+    onMessage(id, async (payload) => {
+        fetchAndDisplayProfile();
+    });
 });
 
 messageForm.addEventListener('submit', async (e) => {
@@ -50,7 +55,7 @@ messageForm.addEventListener('submit', async (e) => {
         await createMessage({
             text: data.get('message'),
             sender: senderProfile.data.username,
-            recipient_id: senderProfile.data.id,
+            recipient_id: id,
             user_id: user.id,
         });
 
