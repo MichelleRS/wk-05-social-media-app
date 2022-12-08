@@ -1,0 +1,23 @@
+.profiles-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* profiles */
+.profile-list-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1.5px solid darkslategray;
+    background: linear-gradient(aliceblue, darkgray);
+    padding: 20px;
+}
+
+/* avatars */
+.avatar {
+    border: 1.5px solid darkslategray;
+    margin-bottom: 1em;
+}
