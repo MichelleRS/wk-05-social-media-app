@@ -43,8 +43,33 @@
         </header>
 
         <main>
+            <!-- user avatar -->
             <img src="/assets/avatar.png" alt="avatar" id="avatar-img" class="avatar" />
+
+            <!-- user name -->
             <h2 class="username-header"></h2>
+
+            <!-- private message feature -->
+            <form class="message-form">
+                <!-- directions -->
+                <p>Post to this user's message feed.</p>
+
+                <!-- message -->
+                <label for="message">Type your message:</label>
+                <textarea
+                    name="message"
+                    id="message"
+                    rows="8"
+                    cols="45"
+                    placeholder="Your message here..."
+                    required
+                ></textarea>
+
+                <!-- submit button -->
+                <button type="submit">Submit Message</button>
+            </form>
+
+            <!-- profile details -->
             <div class="profile-detail"></div>
         </main>
     </body>
