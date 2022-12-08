@@ -61,7 +61,8 @@ export async function getProfile(user_id) {
 }
 
 export async function getProfileById(id) {
-    const response = await client.from('profiles').select('*').match({ id }).single();
+    // .select: our profiles table is also connected to our messages table
+    const response = await client.from('profiles').select('*, messages(*)').match({ id }).single();
     return checkError(response);
 }
 
