@@ -5,12 +5,14 @@ import {
     decrementStars,
     getProfileById,
     incrementStars,
+    createMessage,
 } from '../fetch-utils.js';
 
 // get DOM elements
 const imgEl = document.querySelector('#avatar-img');
 const usernameHeaderEl = document.querySelector('.username-header');
 const profileDetailEl = document.querySelector('.profile-detail');
+const messageForm = document.querySelector('.message-form');
 
 const params = new URLSearchParams(location.search);
 const id = params.get('id');
@@ -28,6 +30,35 @@ window.addEventListener('load', async () => {
     fetchAndDisplayProfile();
 });
 
+messageForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // get form input values
+    const data = new FormData(messageForm);
+
+    // check that sender user has profile info
+    const user = getUser();
+    const senderProfile = await getProfile(user.id);
+
+    if (!senderProfile) {
+        // if not a user, send alert and redirect
+        alert('You must create an account before you can send a private message');
+        location.assign('/');
+    } else {
+        // send message to Supabase
+        await createMessage({
+            text: data.get('message'),
+            sender: senderProfile.data.username,
+            recipient_id: senderProfile.data.id,
+            user_id: user.id,
+        });
+
+        // reset form
+        messageForm.reset();
+    }
+});
+
+// display functions
 // get profile
 async function fetchAndDisplayProfile() {
     profileDetailEl.textContent = '';
