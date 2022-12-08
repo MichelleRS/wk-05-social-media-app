@@ -107,7 +107,7 @@ export function onMessage(profileId, handleMessage) {
     client
         // what table and what rows are we interested in?
         // this template literal prevents a heavier data load
-        .from('messages:recipient_id=eq.${profileId}')
+        .from(`messages:recipient_id=eq.${profileId}`)
         // what type of changes are we interested in?
         .on('INSERT', handleMessage)
         // do it!
