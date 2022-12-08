@@ -101,6 +101,19 @@ export async function createMessage(message) {
     return checkError(response);
 }
 
+// real time function
+// this is technically an event (sends info to Supabase on a button click), so it doesn't need to be async
+export function onMessage(profileId, handleMessage) {
+    client
+        // what table and what rows are we interested in?
+        // this template literal prevents a heavier data load
+        .from('messages:recipient_id=eq.${profileId}')
+        // what type of changes are we interested in?
+        .on('INSERT', handleMessage)
+        // do it!
+        .subscribe();
+}
+
 // error handling
 function checkError(response) {
     return response.error ? console.error(response.error) : response.data;
