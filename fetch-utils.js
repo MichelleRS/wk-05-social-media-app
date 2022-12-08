@@ -65,6 +65,11 @@ export async function getProfileById(id) {
     return checkError(response);
 }
 
+export async function getProfiles() {
+    const response = await client.from('profiles').select('*');
+    return checkError(response);
+}
+
 export async function incrementStars(id) {
     const profile = await getProfileById(id);
 
@@ -89,8 +94,9 @@ export async function decrementStars(id) {
     return checkError(response);
 }
 
-export async function getProfiles() {
-    const response = await client.from('profiles').select('*');
+// insert user input message to the 'messages' table in Supabase
+export async function createMessage(message) {
+    const response = await client.from('messages').insert(message).single();
     return checkError(response);
 }
 
